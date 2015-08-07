@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <title>Javascript learning by wwff</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Javascript learning</h1>
+        <h2>DOM、BOM、原生js</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/wwff/javascript_learning/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/wwff/javascript_learning/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/wwff/javascript_learning" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <p><code>window.onload=function(){</code>
+    <code>var oCrash=document.getElementById('crash');</code>
+    <code>var speedX=5;</code>
+    <code>var speedY=5;</code>
+    <code>startCrash();</code></p>
+
+<pre><code>``function startCrash(){``
+    ``setInterval(function(){``
+        ``var X=oCrash.offsetLeft+speedX;``
+        ``var Y=oCrash.offsetTop+speedY;``
+        ``if(X &gt; document.documentElement.clientWidth - oCrash.offsetWidth){``
+            ``X=document.documentElement.clientWidth-oCrash.offsetWidth;``
+            ``speedX*=-1;``
+        ``}else if(X &lt; 0){``
+            ``X=0;``
+            ``speedX*=-1;``
+        ``}``
+        ``if(Y &gt; document.documentElement.clientHeight-oCrash.offsetHeight){``
+            ``Y=document.documentElement.clientHeight-oCrash.offsetHeight;``
+            ``speedY*=-1;``
+        ``}else if(Y &lt; 0){``
+            ``Y=0;``
+            ``speedY*=-1;``
+        ``}``
+        ``oCrash.style.left = X + 'px';``
+        ``oCrash.style.top = Y + 'px';``
+    ``},35);``
+``}``
+</code></pre>
+
+<p><code>}</code></p>
+      </section>
+    </div>
+
+    
+  </body>
+</html>
