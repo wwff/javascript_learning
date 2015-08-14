@@ -1,79 +1,123 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Javascript learning by wwff</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/github-light.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+
+    <title>Javascript learning by wwff</title>
   </head>
+
   <body>
-    <div class="wrapper">
-      <header>
+    <header>
+      <div class="inner">
         <h1>Javascript learning</h1>
-        <p>原生js弹性运动</p>
+        <h2>原生js螺旋运动</h2>
+        <a href="https://github.com/wwff/javascript_learning" class="button"><small>View project on</small> GitHub</a>
+      </div>
+    </header>
 
-        <p class="view"><a href="https://github.com/wwff/javascript_learning">View the Project on GitHub <small>wwff/javascript_learning</small></a></p>
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a id="螺旋运动" class="anchor" href="#%E8%9E%BA%E6%97%8B%E8%BF%90%E5%8A%A8" aria-hidden="true"><span class="octicon octicon-link"></span></a>螺旋运动</h1>
 
+<pre><code>var oSpiral=document.getElementById('spiral');
+var oUl=oSpiral.getElementsByTagName('ul')[0];
+var aLi=oUl.getElementsByTagName('li');
+var size=6;
+var len=size*size;
+var eachSize=50;
+var col=0;
+var row=0;
+var min=0;
+var max=size-1;
+var arr=[];
+var bgArr=[];
+oUl.style.width=size*(eachSize+1)+'px';
+oUl.style.height=size*(eachSize+1)+'px';
+for(var i=0;i&lt;len;i++){
+    var oLi=document.createElement('li');
+    oLi.style.width=eachSize+'px';
+    oLi.style.height=eachSize+'px';
+    oUl.appendChild(oLi);
+}
+for(var j=0;j&lt;len;j++){
+    //aLi[ row * size + col ].innerHTML = j;
+    arr.push(aLi[row*size+col]);
+    if(row === min &amp;&amp; col &lt; max){
+        col++;
+    }else if(col === max &amp;&amp; row &lt; max){
+        row++;
+    }else if(row ===max &amp;&amp; col &gt; min){
+        col--;
+    }else if(col === min &amp;&amp; row &gt; min){
+        row--;
+    }if(row-1===min &amp;&amp; col===min){
+        min++;
+        max--;
+    }
+}
+for(var i=0;i&lt;len;i++){
+    if(i%4===0){
+        var n=Math.floor(Math.random()*10);
+        var bgImg='url(../images/'+n+'.jpg)';
+        arr[i].style.backgroundImage=bgImg;
+        bgArr.push([i,bgImg]);
+    }
+}
+move();
+setInterval(move,1000);
+function move(){
+    for(var i=0;i&lt;aLi.length;i++){
+        aLi[i].style.backgroundImage='';
+        aLi[i].className='';
+    }
+    for(var i=0;i&lt;bgArr.length;i++){
+        bgArr[i][0]++;
+        if(arr[bgArr[i][0]]){
+            arr[bgArr[i][0]].style.backgroundImage=bgArr[i][1];
+            arr[bgArr[i][0]].className='active';
+            arr[bgArr[i][0]].style.animationDelay = -Math.random()*1 + 's';
+            arr[bgArr[i][0]].style.webkitAnimationDelay = -Math.random()*1 + 's';
+        }else{
+            bgArr.pop();
+            var n=Math.floor(Math.random()*10);
+            var bgImg='url(../images/'+n+'.jpg)';
+            bgArr.unshift([0,bgImg]);
+        }
 
-        <ul>
-          <li><a href="https://github.com/wwff/javascript_learning/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/wwff/javascript_learning/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/wwff/javascript_learning">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
-        <h1>
-<a id="弹性运动" class="anchor" href="#%E5%BC%B9%E6%80%A7%E8%BF%90%E5%8A%A8" aria-hidden="true"><span class="octicon octicon-link"></span></a>弹性运动</h1>
-
-<p><code>window.onload=function(){</code>
-    <code>var oElastic=document.getElementById('elastic');</code>
-    <code>var oBtn=document.getElementById('btn');</code>
-    <code>var timer=null;</code>
-    <code>var speedX=15;</code>
-    <code>var speedY=50;</code>
-    <code>oBtn.onclick=function(){</code></p>
-
-<pre><code>    `elasticCrash();`
-
-`}`
-`function elasticCrash(){`
-    `clearInterval(timer);`
-    `timer=setInterval(function(){`
-        `speedY += 5;`
-
-        `var Y=oElastic.offsetTop + speedY;`
-        `var X=oElastic.offsetLeft + speedX;`
-        `if(Y &gt;document.documentElement.clientHeight - oElastic.offsetHeight){`
-
-            `Y=document.documentElement.clientHeight - oElastic.offsetHeight;`
-
-            `speedY*=-1;`
-
-            `speedY*=0.75;`
-
-            `speedX*=0.75;`
-        `}`
-
-        `oElastic.style.top = Y+'px';`
-        `oElastic.style.left = X+'px';`
-    `},30);`
-`}`
+    }
+}
 </code></pre>
+        </section>
 
-<p><code>}</code></p>
-      </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/wwff">wwff</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-      </footer>
+        <aside id="sidebar">
+          <a href="https://github.com/wwff/javascript_learning/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/wwff/javascript_learning/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/wwff/javascript_learning"></a> is maintained by <a href="https://github.com/wwff">wwff</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
     </div>
-    <script src="javascripts/scale.fix.js"></script>
-    
+
+  
   </body>
 </html>
